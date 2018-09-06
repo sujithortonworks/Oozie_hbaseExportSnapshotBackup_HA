@@ -46,4 +46,8 @@ destTableName=ooziebackups:ha264_default.emp_clone_ooziebackup
 ###Job Level Configuratons
 exportMappers=4
 exportBandwidth=25
+
+###Job Frequency Configurations
+retainedSnapshots=4
+frequency=720 # backup frequency in minutes
 ```
