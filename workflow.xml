@@ -1,39 +1,57 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <workflow-app xmlns="uri:oozie:workflow:0.5" name="hbaseExportSnapshotBackupv1 for table ${srcTableName} to Cluster: ${dest_dfs_internal_nameservices}">
+    <parameters>
+        <property>
+            <name>srcClusterZnode</name>
+            <value>/hbase-secure</value>
+        </property>
+        <property>
+            <name>destClusterZnode</name>
+            <value>/hbase-secure</value>
+        </property>
+        <property>
+            <name>srcClusterSecurity</name>
+            <value>kerberos</value>
+        </property>
+        <property>
+            <name>srcClusterRealm</name>
+            <value>HWX.COM</value>
+        </property>
+        <property>
+            <name>srcClusterRPC</name>
+            <value>authentication</value>
+        </property>
+        <property>
+            <name>destClusterRPC</name>
+            <value>authentication</value>
+        </property>
+        <property>
+            <name>destHbaseRootDir</name>
+            <value>/apps/hbase/data</value>
+        </property>
+        <property>
+            <name>srcSnapshotName</name>
+            <value>${src_dfs_internal_nameservices}_${srcTableName}_ooziebackup</value>
+        </property>
+        <property>
+            <name>destSnapshotName</name>
+            <value>${srcSnapshotName}</value>
+        </property>
+        <property>
+            <name>destTableName</name>
+            <value>ooziebackups:${destSnapshotName}_ooziebackupclone</value>
+        </property>
+        <property>
+            <name>exportBandwidth</name>
+            <value>25</value>
+        </property>
+        <property>
+            <name>exportMappers</name>
+            <value>4</value>
+        </property>
+    </parameters>
     <global>
         <configuration>
-            <property>
-                <name>srcClusterSecurity</name>
-                <value>kerberos</value>
-            </property>
-            <property>
-                <name>srcClusterRPC</name>
-                <value>authentication</value>
-            </property>
-            <property>
-                <name>srcClusterZnode</name>
-                <value>/hbase-secure</value>
-            </property>
-            <property>
-                <name>destClusterSecurity</name>
-                <value>kerberos</value>
-            </property>
-            <property>
-                <name>destClusterRPC</name>
-                <value>authentication</value>
-            </property>
-            <property>
-                <name>destClusterZnode</name>
-                <value>/hbase-secure</value>
-            </property>
-            <property>
-                <name>destSnapshotName</name>
-                <value>${srcSnapshotName}</value>
-            </property>
-            <property>
-                <name>destTableName</name>
-                <value>ooziebackups:${destSnapshotName}_clone</value>
-            </property>
             <property>
                 <name>oozie.launcher.mapreduce.job.hdfs-servers</name>
                 <value>hdfs://${src_dfs_internal_nameservices},hdfs://${dest_dfs_internal_nameservices}</value>
@@ -165,7 +183,7 @@
     <start to="hbaseExportSnapshotBackupv1"/>
     <action cred="src-creds,dest-creds" name="hbaseExportSnapshotBackupv1">
         <shell xmlns="uri:oozie:shell-action:0.3">
-            <job-tracker>${resourceManager}</job-tracker>
+            <job-tracker>hdfs://${src_dfs_internal_nameservices}</job-tracker>
             <name-node>${nameNode}</name-node>
             <exec>hbaseExportSnapshotBackupv1.sh</exec>
             <env-var>srcClusterSecurity=${srcClusterSecurity}</env-var>
@@ -188,6 +206,8 @@
             <env-var>destTableName=${destTableName}</env-var>
             <env-var>destHbaseRootDir=${destHbaseRootDir}</env-var>
             <env-var>exportMappers=${exportMappers}</env-var>
+            <env-var>src_dfs_internal_nameservices=${src_dfs_internal_nameservices}</env-var>
+            <env-var>exportBandwidth=${exportBandwidth}</env-var>
             <file>hbaseExportSnapshotBackupv1.sh</file>
         </shell>
         <ok to="end"/>
