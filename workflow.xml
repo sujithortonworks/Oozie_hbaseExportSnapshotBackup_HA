@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<workflow-app xmlns="uri:oozie:workflow:0.5" name="hbaseExportSnapshotBackupv1 for table ${srcTableName} to Cluster: ${dest_dfs_internal_nameservices}">
+<workflow-app xmlns="uri:oozie:workflow:0.5" name="hbaseExportSnapshotBackupv1 for table ${srcTableNamespace}:${srcTableName} to Cluster: ${dest_dfs_internal_nameservices}">
     <parameters>
         <property>
             <name>srcClusterZnode</name>
@@ -31,7 +31,7 @@
         </property>
         <property>
             <name>srcSnapshotName</name>
-            <value>${src_dfs_internal_nameservices}_${srcTableName}_ooziebackup</value>
+            <value>${src_dfs_internal_nameservices}_${srcTableNamespace}.${srcTableName}_ooziebackup</value>
         </property>
         <property>
             <name>destSnapshotName</name>
@@ -48,6 +48,18 @@
         <property>
             <name>exportMappers</name>
             <value>4</value>
+        </property>
+        <property>
+            <name>destClusterRealm</name>
+            <value>${srcClusterRealm}</value>
+        </property>
+        <property>
+            <name>destClusterSecurity</name>
+            <value>kerberos</value>
+        </property>
+        <property>
+            <name>srcTableNamespace</name>
+            <value>default</value>
         </property>
     </parameters>
     <global>
@@ -79,34 +91,6 @@
             <property>
                 <name>oozie.launcher.mapreduce.job.send-token-conf</name>
                 <value>mapreduce.jobhistory.principal|^dfs.nameservices|^dfs.namenode.rpc-address.*|^dfs.ha.namenodes.*|^dfs.client.failover.proxy.provider.*|dfs.namenode.kerberos.principal</value>
-            </property>
-            <property>
-                <name>mapreduce.job.hdfs-servers</name>
-                <value>hdfs://${src_dfs_internal_nameservices},hdfs://${dest_dfs_internal_nameservices}</value>
-            </property>
-            <property>
-                <name>dfs.client.failover.proxy.provider.${dest_dfs_internal_nameservices}</name>
-                <value>org.apache.hadoop.hdfs.server.namenode.ha.ConfiguredFailoverProxyProvider</value>
-            </property>
-            <property>
-                <name>dfs.ha.namenodes.${dest_dfs_internal_nameservices}</name>
-                <value>nn1,nn2</value>
-            </property>
-            <property>
-                <name>dfs.namenode.rpc-address.${dest_dfs_internal_nameservices}.nn1</name>
-                <value>${dest_dfs_namenode_rpc_address_nn1}</value>
-            </property>
-            <property>
-                <name>mapreduce.job.send-token-conf</name>
-                <value>mapreduce.jobhistory.principal|^dfs.nameservices|^dfs.namenode.rpc-address.*|^dfs.ha.namenodes.*|^dfs.client.failover.proxy.provider.*|dfs.namenode.kerberos.principal</value>
-            </property>
-            <property>
-                <name>dfs.namenode.rpc-address.${dest_dfs_internal_nameservices}.nn1</name>
-                <value>${dest_dfs_namenode_rpc_address_nn1}</value>
-            </property>
-            <property>
-                <name>dfs.namenode.rpc-address.${dest_dfs_internal_nameservices}.nn2</name>
-                <value>${dest_dfs_namenode_rpc_address_nn2}</value>
             </property>
         </configuration>
     </global>
@@ -200,7 +184,7 @@
             <env-var>dest_dfs_namenode_rpc_address_nn1=${dest_dfs_namenode_rpc_address_nn1}</env-var>
             <env-var>dest_dfs_namenode_rpc_address_nn2=${dest_dfs_namenode_rpc_address_nn2}</env-var>
             <env-var>srcSnapshotName=${srcSnapshotName}</env-var>
-            <env-var>srcTableName=${srcTableName}</env-var>
+            <env-var>srcTableName=${srcTableNamespace}:${srcTableName}</env-var>
             <env-var>destSnapshotName=${destSnapshotName}</env-var>
             <env-var>destTableName=${destTableName}</env-var>
             <env-var>destTableName=${destTableName}</env-var>
