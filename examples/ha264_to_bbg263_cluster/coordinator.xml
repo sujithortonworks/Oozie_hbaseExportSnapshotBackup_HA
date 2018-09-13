@@ -1,26 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<bundle-app xmlns="uri:oozie:bundle:0.2" name="bundle testfreq">
-    <coordinator name="Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
-        <app-path>/oozie_workflows/coordinators/hbaseExportSnapshotBackupv2/coordinator.xml</app-path>
-          <configuration>
-            <property>
-		<name>backupFrequency</name>
-		<value>5</value>
-            </property>
-         </configuration>
-    </coordinator>
-    <coordinator name="15min Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
-        <app-path>/oozie_workflows/coordinators/hbaseExportSnapshotBackupv2/coordinator.xml</app-path>
-          <configuration>
-            <property>
-                <name>backupFrequency</name>
-                <value>15</value>
-            </property>
-         </configuration>
-    </coordinator>
-</bundle-app>
-[hbase@c176-node4 ~]$ cat coordinator.xml
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <coordinator-app xmlns="uri:oozie:coordinator:0.5" end="2018-09-15T23:18Z" frequency="${backupFrequency}" name="Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableNamespace}:${srcTableName} to Cluster: ${dest_dfs_internal_nameservices}" start="2018-09-13T22:16Z" timezone="UTC">
     <parameters>
             <property>
