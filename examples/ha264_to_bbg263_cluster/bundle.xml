@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<bundle-app xmlns="uri:oozie:bundle:0.2" name="bundle testfreq">
+    <coordinator name="Hourly Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
+        <app-path>coordinator.xml</app-path>
+          <configuration>
+            <property>
+                <name>backupFrequency</name>
+                <value>30</value>
+            </property>
+         </configuration>
+    </coordinator>
+    <coordinator name="4hr Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
+        <app-path>coordinator.xml</app-path>
+          <configuration>
+            <property>
+                <name>backupFrequency</name>
+                <value>240</value>
+            </property>
+         </configuration>
+    </coordinator>
+        <coordinator name="8hr Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
+        <app-path>coordinator.xml</app-path>
+          <configuration>
+            <property>
+                <name>backupFrequency</name>
+                <value>480</value>
+            </property>
+         </configuration>
+    </coordinator>
+    <coordinator name="12hr Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
+        <app-path>coordinator.xml</app-path>
+          <configuration>
+            <property>
+                <name>backupFrequency</name>
+                <value>480</value>
+            </property>
+         </configuration>
+    </coordinator>
+     <coordinator name="Daily Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
+        <app-path>coordinator.xml</app-path>
+          <configuration>
+            <property>
+                <name>backupFrequency</name>
+                <value>1440</value>
+            </property>
+         </configuration>
+    </coordinator>
+</bundle-app>
