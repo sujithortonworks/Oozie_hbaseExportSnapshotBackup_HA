@@ -5,34 +5,34 @@
           <configuration>
             <property>
                 <name>backupFrequency</name>
-                <value>30</value>
+                <value>60</value>
             </property>
          </configuration>
     </coordinator>
-    <coordinator name="4hr Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
+    <coordinator name="4.5hr Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
         <app-path>coordinator.xml</app-path>
           <configuration>
             <property>
                 <name>backupFrequency</name>
-                <value>240</value>
+                <value>270</value>
             </property>
          </configuration>
     </coordinator>
-        <coordinator name="8hr Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
+        <coordinator name="10.5hr Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
         <app-path>coordinator.xml</app-path>
           <configuration>
             <property>
                 <name>backupFrequency</name>
-                <value>480</value>
+                <value>630</value>
             </property>
          </configuration>
     </coordinator>
-    <coordinator name="12hr Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
+    <coordinator name="13.5hr Coordinator for hbaseExportSnapshotBackupv1 for table ${srcTableName}">
         <app-path>coordinator.xml</app-path>
           <configuration>
             <property>
                 <name>backupFrequency</name>
-                <value>480</value>
+                <value>810</value>
             </property>
          </configuration>
     </coordinator>
